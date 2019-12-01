@@ -1,0 +1,86 @@
+﻿@model BasicsOfEntityFramework.Domain.Entities.Customer
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orders)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>Number</th>
+                    <th>Date</th>
+                </tr>
+                @foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => order.Number)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => order.Date)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                <tr>
+                    <th>ProductName</th>
+                    <th>Price</th>
+                </tr>
+                @foreach (var product in Model.Comments.GroupBy(c => c.Product).Select(c => c.Key))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => product.ProductName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => product.Price)
+                        </td>
+                    </tr>
+                }
+            </table>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
