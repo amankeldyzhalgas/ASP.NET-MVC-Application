@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BasicsOfEntityFramework.Domain.Context;
 using BasicsOfEntityFramework.Domain.Entities;
 using BasicsOfEntityFramework.Service;
+using ASP.NET_MVC_Application.Models;
 
 namespace ASP.NET_MVC_Application.Controllers
 {
@@ -59,11 +60,18 @@ namespace ASP.NET_MVC_Application.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CustomerName,Address,Phone,Email")] Customer customer)
+        public async Task<IActionResult> Create(CustomerViewModel customer)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                _context.Add(
+                    new Customer
+                    {
+                        CustomerName = customer.CustomerName,
+                        Address = customer.Address,
+                        Email = customer.Email,
+                        Phone = customer.Phone
+                    });
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
